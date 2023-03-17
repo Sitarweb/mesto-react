@@ -1,5 +1,5 @@
 # Проект 10: Mesto(React)
-__Опубликован по адресу:__ 
+__Опубликован по адресу:__ https://sitarweb.github.io/mesto-react/
 
 __Репозиторий:__ https://github.com/Sitarweb/mesto-react 
 #### Описание
