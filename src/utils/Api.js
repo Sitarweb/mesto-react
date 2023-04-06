@@ -57,19 +57,24 @@ class Api{
         }).then(this._checkResponse);
     }
     /** Метод ставит лайк */
-    putLike(cardId){
+    _putLike(cardId){
         return fetch(`${this._url}/cards/${cardId}/likes`, {
             headers: this._headers,
             method: 'PUT'
         }).then(this._checkResponse);
     }
     /** Метод удаляет лайк */
-    deleteLike(cardId){
+    _deleteLike(cardId){
         return fetch(`${this._url}/cards/${cardId}/likes`, {
             headers: this._headers,
             method: 'DELETE'
         }).then(this._checkResponse);
     }
+
+    changeLikeCardStatus(cardId, isLiked){
+        return isLiked? this._deleteLike(cardId) : this._putLike(cardId);
+    }
+
     /** Метод сохраняет на сервере обновленный аватар профиля */
     patchUserAvatar(data){
         return fetch(`${this._url}/users/me/avatar`,{

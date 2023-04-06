@@ -1,7 +1,29 @@
 import React from "react";
 import PopupWithForm from "./PopupWithForm.js";
+import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
 
 function EditProfilePopup(props) {
+  const currentUser = React.useContext(CurrentUserContext);
+
+  const [name, setName] = React.useState("");
+  const [description, setDescription] = React.useState("");
+
+  function handleSubmit(e) {
+    // Запрещаем браузеру переходить по адресу формы
+    e.preventDefault();
+
+    // Передаём значения управляемых компонентов во внешний обработчик
+    props.onUpdateUser({
+      name: name,
+      about: description,
+    });
+  }
+
+  React.useEffect(() => {
+    setName(currentUser.name);
+    setDescription(currentUser.about);
+  }, [currentUser]);
+
   // Попап редактирования профиля
   return (
     <PopupWithForm
@@ -9,6 +31,7 @@ function EditProfilePopup(props) {
       title="Редактировать профиль"
       isOpen={props.isOpen}
       onClose={props.onClose}
+      onSubmit={handleSubmit}
     >
       <input
         name="profile-form-nickname"
@@ -16,10 +39,11 @@ function EditProfilePopup(props) {
         id="name-input"
         className="form__input form__input_mean_name"
         placeholder={"Имя профиля"}
-        defaultValue={"Жак-Ив Кусто"}
+        value={name || ""}
         autoComplete="off"
         minLength={2}
         maxLength={40}
+        onChange={(e) => setName(e.target.value)}
         required
       />
       <span className="form__input-error name-input-error"></span>
@@ -29,10 +53,11 @@ function EditProfilePopup(props) {
         id="job-input"
         className="form__input form__input_mean_job"
         placeholder={"Описание профиля"}
-        defaultValue={"Исследователь океана"}
+        value={description || ""}
         autoComplete="off"
         minLength={2}
         maxLength={200}
+        onChange={(e) => setDescription(e.target.value)}
         required
       />
       <span className="form__input-error job-input-error"></span>

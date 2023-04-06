@@ -2,7 +2,18 @@ import React from "react";
 import PopupWithForm from "./PopupWithForm.js";
 
 function AddPlacePopup(props) {
-  // Попап создания карточки
+  const [name, setName] = React.useState("");
+  const [link, setLink] = React.useState("");
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    props.onAddPlace({
+      name: name,
+      link: link,
+    });
+  }
+
   return (
     <PopupWithForm
       name="card"
@@ -10,6 +21,7 @@ function AddPlacePopup(props) {
       buttonText="Создать"
       isOpen={props.isOpen}
       onClose={props.onClose}
+      onSubmit={handleSubmit}
     >
       <input
         name="card-form-title"
@@ -20,6 +32,7 @@ function AddPlacePopup(props) {
         autoComplete="off"
         minLength={2}
         maxLength={30}
+        onChange={(e) => setName(e.target.value)}
         required
       />
       <span className="form__input-error mesto-input-error"></span>
@@ -30,6 +43,7 @@ function AddPlacePopup(props) {
         className="form__input form__input_card_link"
         placeholder={"Ссылка на картинку"}
         autoComplete="off"
+        onChange={(e) => setLink(e.target.value)}
         required
       />
       <span className="form__input-error url-input-error"></span>

@@ -2,13 +2,25 @@ import React from "react";
 import PopupWithForm from "./PopupWithForm.js";
 
 function EditAvatarPopup(props) {
-  // Попап обновления аватара
+  const avatarRef = React.useRef();
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    props.onUpdateAvatar({
+      link: `${avatarRef.current.value}`,
+    });
+
+    e.target.reset();
+  }
+
   return (
     <PopupWithForm
       name="avatar"
       title="Обновить аватар"
       isOpen={props.isOpen}
       onClose={props.onClose}
+      onSubmit={handleSubmit}
     >
       <input
         name="avatar-form-link"
@@ -17,6 +29,7 @@ function EditAvatarPopup(props) {
         className="form__input "
         placeholder={"Ссылка на фото"}
         autoComplete="off"
+        ref={avatarRef}
         required
       />
       <span className="form__input-error avatar-input-error"></span>
