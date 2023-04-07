@@ -14,6 +14,11 @@ function AddPlacePopup(props) {
     });
   }
 
+  React.useEffect(() => {
+    setName("");
+    setLink("");
+  }, [props.isOpen]);
+
   return (
     <PopupWithForm
       name="card"
@@ -29,6 +34,7 @@ function AddPlacePopup(props) {
         id="mesto-input"
         className="form__input form__input_card_title"
         placeholder={"Название"}
+        value={name}
         autoComplete="off"
         minLength={2}
         maxLength={30}
@@ -42,6 +48,7 @@ function AddPlacePopup(props) {
         id="url-input"
         className="form__input form__input_card_link"
         placeholder={"Ссылка на картинку"}
+        value={link}
         autoComplete="off"
         onChange={(e) => setLink(e.target.value)}
         required
